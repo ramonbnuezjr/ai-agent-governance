@@ -1,6 +1,7 @@
 """FastAPI app: sessions, run agent, events, policies, evaluations, approve/deny write, presets."""
 
 import logging
+import os
 import threading
 import uuid
 from contextlib import asynccontextmanager
@@ -68,9 +69,17 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="AgentOps Governance API", lifespan=lifespan)
 
+def _cors_origins_list() -> list[str]:
+    default = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    extra_str = os.environ.get("CORS_ORIGINS", "").strip()
+    if not extra_str:
+        return default
+    return default + [o.strip() for o in extra_str.split(",") if o.strip()]
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=_cors_origins_list(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

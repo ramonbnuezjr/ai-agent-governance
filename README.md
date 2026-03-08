@@ -57,6 +57,30 @@ npm run dev            # http://localhost:5173
 
 For production build: `npm run build`; output is in `frontend/dist/` (e.g. deploy to Vercel with root `frontend`).
 
+## Deploy backend on Render
+
+1. **New Web Service** — Connect GitHub repo `ramonbnuezjr/ai-agent-governance`. Do **not** set Root Directory (use repo root so Render sees `pyproject.toml` and `src/`).
+
+2. **Build & start**
+   - **Build Command:** `pip install .`
+   - **Start Command:** `uvicorn src.api.app:app --host 0.0.0.0 --port $PORT`
+
+3. **Environment variables** (Settings → Environment):
+
+   | Key | Value | Required |
+   |-----|--------|----------|
+   | `GEMINI_API_KEY` | Your Gemini API key | Yes (or use Anthropic below) |
+   | `ANTHROPIC_API_KEY` | Your Anthropic key | Yes if not using Gemini |
+   | `CORS_ORIGINS` | Your Vercel frontend URL | Yes for Vercel UI (e.g. `https://ai-agent-governance.vercel.app`) |
+   | `DATABASE_URL` | `sqlite:///agent_ops.db` | No (default); data is ephemeral unless you add a Render Disk |
+   | `HARDWARE_ENABLED` | `false` | No |
+
+   Add other vars from `.env.example` if you use them (e.g. `GEMINI_MODEL`, `LOG_LEVEL`).
+
+4. **Database:** The default SQLite file is lost on each deploy/restart. For persistent data, add a [Render Disk](https://render.com/docs/disks) and set `DATABASE_URL=sqlite:////data/agent_ops.db` (mount the disk at `/data`).
+
+5. After deploy, copy the service URL (e.g. `https://your-service.onrender.com`) and set **Vercel** env var `VITE_API_URL` to that URL, then redeploy the frontend.
+
 ## Environment Variables
 
 See `.env.example` for all required and optional variables with descriptions. For the Governance Harness, set `ANTHROPIC_API_KEY` to run the agent; `DATABASE_URL` defaults to SQLite.

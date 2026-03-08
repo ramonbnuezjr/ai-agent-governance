@@ -50,6 +50,10 @@ class Settings(BaseSettings):
     )
     API_HOST: str = Field(default="0.0.0.0", description="API bind host.")
     API_PORT: int = Field(default=8000, description="API bind port.")
+    CORS_ORIGINS: str = Field(
+        default="",
+        description="Comma-separated origins for CORS (e.g. https://your-app.vercel.app). Local dev origins are always allowed.",
+    )
 
     def require_anthropic_key(self) -> str:
         """Return Anthropic API key; raise if not set. Use before creating Anthropic client."""
