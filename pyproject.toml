@@ -1,0 +1,74 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[project]
+name = "agent_ops"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.11"
+dependencies = [
+  # AI / LLM
+  "anthropic==0.28.0",
+  "openai==1.35.0",
+  "google-generativeai==0.8.3",
+  "pydantic>=2.8.0,<3",
+  "pydantic-settings>=2.3.4",
+  # MCP
+  "mcp==1.0.0",
+  # HTTP / async
+  "httpx==0.27.0",
+  "anyio==4.6.0",
+  # Logging
+  "structlog==24.2.0",
+  # API
+  "fastapi==0.115.5",
+  "uvicorn[standard]==0.32.1",
+  # Hardware (Raspberry Pi — conditionally installed)
+  # "RPi.GPIO==0.7.1",  # Uncomment on Pi hardware
+  # "adafruit-blinka==8.40.0",  # Uncomment on Pi hardware
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.2.2",
+  "pytest-cov==5.0.0",
+  "pytest-asyncio==0.23.7",
+  "mypy==1.10.0",
+  "ruff==0.5.0",
+  "black==24.4.2",
+  "pre-commit==3.7.1",
+  "bandit==1.7.9",
+  "pip-audit==2.7.3",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+select = ["E", "F", "W", "I", "N", "S", "B", "A", "C4", "T20"]
+ignore = ["S101"]  # allow assert in tests
+
+[tool.mypy]
+strict = true
+python_version = "3.11"
+ignore_missing_imports = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "--cov=src --cov-report=term-missing --cov-fail-under=83"
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["tests/*", "scripts/*", "src/api/__main__.py"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+targets = ["src"]
