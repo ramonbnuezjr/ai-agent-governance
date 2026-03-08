@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - Python 3.11+
-- [Node.js if applicable]
+- Node.js 20+ (for the dashboard frontend)
 
 ## Setup
 
@@ -43,6 +43,19 @@ python -m src.api
 # Serves on http://0.0.0.0:8000 by default. Set API_HOST/API_PORT in .env.
 # Endpoints: GET/POST /api/sessions, POST /api/sessions/{id}/run, GET /api/events, GET /api/evaluations, POST /api/sessions/{id}/approve-write, GET /api/presets, WebSocket /ws/{session_id}
 ```
+
+## Frontend (Dashboard)
+
+The UI lives in `frontend/` (Vite + React + TypeScript).
+
+```bash
+cd frontend
+cp .env.example .env   # optional: set VITE_API_URL if API is not on http://localhost:8000
+npm install
+npm run dev            # http://localhost:5173
+```
+
+For production build: `npm run build`; output is in `frontend/dist/` (e.g. deploy to Vercel with root `frontend`).
 
 ## Environment Variables
 
