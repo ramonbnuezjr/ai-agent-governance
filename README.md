@@ -57,7 +57,11 @@ npm run dev            # http://localhost:5173
 
 For production build: `npm run build`; output is in `frontend/dist/` (e.g. deploy to Vercel with root `frontend`).
 
-## Deploy backend on Render
+## Deployment
+
+For full deployment (Vercel frontend + Render backend), env vars, CORS, and cold-start notes, see **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**.
+
+Quick reference — **Deploy backend on Render:**
 
 1. **New Web Service** — Connect GitHub repo `ramonbnuezjr/ai-agent-governance`. Do **not** set Root Directory (use repo root so Render sees `pyproject.toml` and `src/`).
 
