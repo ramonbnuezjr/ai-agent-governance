@@ -35,20 +35,48 @@ export function Dashboard() {
       <h1 className="page-title">Dashboard</h1>
       {stats && (
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
-          <div className="card" style={{ minWidth: "140px" }}>
-            <div style={{ color: "#8a8f98", fontSize: "0.8rem", marginBottom: "0.25rem" }}>Sessions</div>
+          <div className="card" style={{ minWidth: "180px" }}>
+            <div style={{ color: "#8a8f98", fontSize: "0.8rem", marginBottom: "0.25rem" }}>
+              Agent Sessions{" "}
+              <span
+                title="Each session represents one governed agent run with a specific objective. The agent plans, executes tools, and records observations."
+              >
+                ⓘ
+              </span>
+            </div>
             <div style={{ fontSize: "1.5rem", fontWeight: 600 }}>{stats.total_sessions}</div>
           </div>
-          <div className="card" style={{ minWidth: "140px" }}>
-            <div style={{ color: "#8a8f98", fontSize: "0.8rem", marginBottom: "0.25rem" }}>Events</div>
+          <div className="card" style={{ minWidth: "180px" }}>
+            <div style={{ color: "#8a8f98", fontSize: "0.8rem", marginBottom: "0.25rem" }}>
+              Telemetry Events{" "}
+              <span
+                title="Total events recorded using the Agentic Telemetry Schema (ATS). Includes Plans, Tool Calls, Observations, and Memory Writes."
+              >
+                ⓘ
+              </span>
+            </div>
             <div style={{ fontSize: "1.5rem", fontWeight: 600 }}>{stats.total_events}</div>
           </div>
-          <div className="card" style={{ minWidth: "140px" }}>
-            <div style={{ color: "#8a8f98", fontSize: "0.8rem", marginBottom: "0.25rem" }}>Violations</div>
+          <div className="card" style={{ minWidth: "180px" }}>
+            <div style={{ color: "#8a8f98", fontSize: "0.8rem", marginBottom: "0.25rem" }}>
+              Policy Violations{" "}
+              <span
+                title="Actions that failed a governance policy check. Violations increase the ARI score and indicate the agent acted outside allowed bounds."
+              >
+                ⓘ
+              </span>
+            </div>
             <div style={{ fontSize: "1.5rem", fontWeight: 600 }}>{stats.total_violations}</div>
           </div>
-          <div className="card" style={{ minWidth: "140px" }}>
-            <div style={{ color: "#8a8f98", fontSize: "0.8rem", marginBottom: "0.25rem" }}>Avg ARI</div>
+          <div className="card" style={{ minWidth: "180px" }}>
+            <div style={{ color: "#8a8f98", fontSize: "0.8rem", marginBottom: "0.25rem" }}>
+              Avg ARI{" "}
+              <span
+                title="Average Agency-Risk Index (ARI) across all sessions. Higher values indicate higher governance risk."
+              >
+                ⓘ
+              </span>
+            </div>
             <div style={{ fontSize: "1.5rem", fontWeight: 600 }}>{stats.avg_ari_score}</div>
           </div>
         </div>
